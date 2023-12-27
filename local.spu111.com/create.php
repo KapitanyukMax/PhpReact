@@ -3,11 +3,11 @@ global $pdo;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST['name'];
     $description = $_POST['description'];
-    $imageTmpName = $_FILES['image']['tmp_name'];
+    $imageTmpName = $_FILES['image']['tmp_name']; //отримуємо тимчасовий шлях до файлу перед завантаженням на сервер
     $dir = '/images/';
     $image_name = uniqid().'.jpg';
-    $destination = $_SERVER['DOCUMENT_ROOT'].$dir.$image_name;
-    move_uploaded_file($imageTmpName, $destination);
+    $destination = $_SERVER['DOCUMENT_ROOT'].$dir.$image_name; //генеруємо новий шлях до файлу на сервері
+    move_uploaded_file($imageTmpName, $destination); //переміщуємо з тичасового шляху в новий (Зберігаємо зображення на сервері)
 
     include($_SERVER["DOCUMENT_ROOT"] . "/config/connection_database.php");
     $sql = 'INSERT INTO categories (name, image, description) VALUES (:name, :image, :description)';

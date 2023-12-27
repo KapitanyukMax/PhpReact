@@ -49,19 +49,19 @@ class CategoryController extends Controller
     function create(Request $request)
     {
         $input = $request->all();
-        $image = $request->file('image');
-        $manager = new ImageManager(new Driver());
-        $imageName = uniqid().'.webp';
+        $image = $request->file('image'); //тимчасовий шлях до картинки
+        $manager = new ImageManager(new Driver()); //об'єкт для роботи з картинками
+        $imageName = uniqid().'.webp'; //генеруємо нову назву картинки на сервері
         $sizes = [50,150,300,600,1200];
         foreach ($sizes as $size)
         {
-            $imageSave = $manager->read($image);
+            $imageSave = $manager->read($image); //створюється екземпляр класу Image, який представляє саме зображення, яке поки зберігається за тимчасовим шляхом
             $imageSave->scale($size);
-            $path = public_path('upload/'.$size.'_'.$imageName);
-            $imageSave->toWebp()->save($path);
+            $path = public_path('upload/'.$size.'_'.$imageName); //отримуємо абсолютний шлях
+            $imageSave->toWebp()->save($path); //зберігаємо отримане зображення на сервері
         }
-        $input["image"]=$imageName;
-        $category = Categories::create($input);
+        $input["image"]=$imageName; //під'язуємо картинку (збережену на сервері)
+        $category = Categories::create($input); //створюємо категорію з уже збереженою картинкою
         return response()->json($category,200,['Charset'=>'utf-8']);
     }
 
@@ -127,9 +127,9 @@ class CategoryController extends Controller
         $sizes = [50,150,300,600,1200];
         foreach ($sizes as $size) {
             $fileSave = $size."_".$category->image;
-            $path=public_path('upload/'.$fileSave);
+            $path=public_path('upload/'.$fileSave); //абсолютний шлях
             if(file_exists($path))
-                unlink($path);
+                unlink($path); //видаляємо файл за шляхом, якщо існує
         }
         $category->delete();
         return response()->json("",200, ['Charset' => 'utf-8']);
@@ -172,7 +172,7 @@ class CategoryController extends Controller
         $category = Categories::findOrFail($id);
         $imageName=$category->image;
         $inputs = $request->all();
-        if($request->hasFile("image")) {
+        if($request->hasFile("image")) { //якщо на фронті було підв'язано зображення до форми, то опрацьовуємо ноу картинку, як і при створенні
             $image = $request->file("image");
             $imageName = uniqid() . ".webp";
             $sizes = [50, 150, 300, 600, 1200];
@@ -184,13 +184,13 @@ class CategoryController extends Controller
                 $imageRead->scale(width: $size);
                 $path = public_path('upload/' . $fileSave);
                 $imageRead->toWebp()->save($path);
-                $removeImage = public_path('upload/'.$size."_". $category->image);
+                $removeImage = public_path('upload/'.$size."_". $category->image); //при цьому видаляємо старе зображення
                 if(file_exists($removeImage))
                     unlink($removeImage);
             }
         }
         $inputs["image"]= $imageName;
-        $category->update($inputs);
+        $category->update($inputs); //оновлюємо категорію в базі, під'язавши нове зображення
         return response()->json($category,200,
             ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'], JSON_UNESCAPED_UNICODE);
     }

@@ -37,7 +37,7 @@ const CategoriesListPage: React.FC = () => {
             const resp = await http_common.get("/api/categories")
             setList(resp.data);
         })();
-    }, []);
+    }, []); //переданий метод запуститься лише при першому рендері
 
     return (
         <>

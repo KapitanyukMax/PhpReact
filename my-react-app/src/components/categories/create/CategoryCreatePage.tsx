@@ -75,22 +75,22 @@ const CategoryCreatePage = () => {
     );
 
     const beforeUpload = (file: RcFile) => {
-        const isImage = /^image\/\w+/.test(file.type);
+        const isImage = /^image\/\w+/.test(file.type); //за допомогою регулярних виразів перевіряємо, чи завантажений файл є зображенням
         if (!isImage) {
             message.error('Оберіть файл зображення!');
         }
-        const isLt2M = file.size / 1024 / 1024 < 10;
-        if (!isLt2M) {
+        const isLt10M = file.size / 1024 / 1024 < 10;
+        if (!isLt10M) {
             message.error('Розмір файлу не повинен перевищувать 10MB!');
         }
-        console.log("is select", isImage && isLt2M);
-        return isImage && isLt2M;
+        console.log("is select", isImage && isLt10M);
+        return isImage && isLt10M;
     };
 
     return (
         <>
             <Divider style={customDividerStyle}>Додати категорію</Divider>
-            {errorMessage && <Alert message={errorMessage} style={{marginBottom: "20px"}} type="error" />}
+            {errorMessage && <Alert message={errorMessage} style={{marginBottom: "20px"}} type="error" />} //Якщо errorMessage не пусте, то воно буде виведене на екран
             <Form
                 name="basic"
                 style={{maxWidth: 1000}}
@@ -118,7 +118,9 @@ const CategoryCreatePage = () => {
                     onChange={handleChange}
                     accept={"image/*"}
                 >
-                    {file ? <img src={URL.createObjectURL(file)} alt="avatar" style={{width: '100%'}}/> : uploadButton}
+                    {file
+                        ? <img src={URL.createObjectURL(file)} alt="avatar" style={{width: '100%'}}/> //шлях до зображення - це тимчасово створена url із завантаженим файлом
+                        : uploadButton}
                 </Upload>
 
                 <Form.Item wrapperCol={{offset: 8, span: 16}}>

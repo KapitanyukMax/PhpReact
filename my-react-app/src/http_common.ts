@@ -10,4 +10,4 @@ const http_common = axios.create({
     }
 });
 
-export default  http_common;
+export default http_common;
