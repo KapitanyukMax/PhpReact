@@ -4,6 +4,7 @@ import ContainerDefault from "./components/containers/default/ContainerDefault.t
 import CategoriesListPage from "./components/categories/list/CategoriesListPage.tsx";
 import NoMatch from "./components/pages/NoMatch.tsx";
 import CategoryCreatePage from "./components/categories/create/CategoryCreatePage.tsx";
+import CategoryEditPage from "./components/categories/edit/CategoryEditPage.tsx";
 
 const App: React.FC = () => {
     return (
@@ -12,6 +13,7 @@ const App: React.FC = () => {
                 <Route path="/" element={<ContainerDefault />}>
                     <Route index element={<CategoriesListPage />} />
                     <Route path={'create'} element={<CategoryCreatePage />} />
+                    <Route path={'edit/:categoryId'} element={<CategoryEditPage />} />
                     <Route path={'*'} element={<NoMatch />} />
                 </Route>
             </Routes>

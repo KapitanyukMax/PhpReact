@@ -14,7 +14,6 @@ const CategoryCreatePage = () => {
     const [errorMessage, setErrorMessage] = useState<string>("");
     const [loading, setLoading] = useState(false);
 
-
     const onFinish = async (values: any) => {
         console.log('Success:', values);
         console.log('file:', file);
@@ -52,8 +51,6 @@ const CategoryCreatePage = () => {
         margin: '5px 0 50px 0',
     };
 
-
-
     const handleChange: UploadProps['onChange'] = (info: UploadChangeParam<UploadFile>) => {
         if (info.file.status === 'uploading') {
             setLoading(true);
@@ -90,7 +87,9 @@ const CategoryCreatePage = () => {
     return (
         <>
             <Divider style={customDividerStyle}>Додати категорію</Divider>
-            {errorMessage && <Alert message={errorMessage} style={{marginBottom: "20px"}} type="error" />} //Якщо errorMessage не пусте, то воно буде виведене на екран
+            {
+                errorMessage && <Alert message={errorMessage} style={{marginBottom: "20px"}} type="error" /> //Якщо errorMessage не пусте, то воно буде виведене на екран
+            }
             <Form
                 name="basic"
                 style={{maxWidth: 1000}}
