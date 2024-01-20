@@ -17,12 +17,10 @@ class Product extends Model
         'quantity',
         'category_id',
     ];
-    public function category()
-    {
+    public function category() {
         return $this->belongsTo(Categories::class);
     }
-    public function product_images()
-    {
+    public function product_images() {
         return $this->hasMany(ProductImage::class);
     }
 }

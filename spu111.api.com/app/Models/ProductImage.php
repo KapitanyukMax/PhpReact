@@ -9,12 +9,12 @@ class ProductImage extends Model
 {
     protected $table = 'product_images';
     use HasFactory;
+
     protected $fillable = [
         'name',
         'product_id',
     ];
-    public function product()
-    {
+    public function product() {
         return $this->belongsTo(Product::class);
     }
 }
