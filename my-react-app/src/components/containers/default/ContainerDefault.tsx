@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {
     MenuFoldOutlined,
-    MenuUnfoldOutlined,
+    MenuUnfoldOutlined, PlusOutlined,
     UploadOutlined,
     UserOutlined,
     VideoCameraOutlined,
@@ -42,6 +42,11 @@ const ContainerDefault : React.FC = () => {
                                 key: '3',
                                 icon: <UploadOutlined />,
                                 label: <Link to={'/register'}>Реєстрація</Link>,
+                            },
+                            {
+                                key: '4',
+                                icon: <PlusOutlined />,
+                                label: <Link to={'/products'}>Продукти</Link>,
                             },
                         ]}
                     />
